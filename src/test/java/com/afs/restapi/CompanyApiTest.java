@@ -82,7 +82,6 @@ class CompanyApiTest {
     @Test
     void should_create_employee() throws Exception {
         Company company = getCompany1();
-
         ObjectMapper objectMapper = new ObjectMapper();
         String companyRequest = objectMapper.writeValueAsString(company);
         mockMvc.perform(post("/companies")
