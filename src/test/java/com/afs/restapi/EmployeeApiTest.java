@@ -32,8 +32,6 @@ class EmployeeApiTest {
     private EmployeeJpaRepository employeeJpaRepository;
 
 
-
-
     @BeforeEach
     void setUp() {
         inMemoryEmployeeRepository.clearAll();
