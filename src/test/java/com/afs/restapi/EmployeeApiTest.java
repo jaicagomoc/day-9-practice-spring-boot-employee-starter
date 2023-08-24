@@ -121,7 +121,7 @@ class EmployeeApiTest {
     @Test
     void should_find_employee_by_gender() throws Exception {
         Employee employee = getEmployeeBob();
-        inMemoryEmployeeRepository.insert(employee);
+        employeeJpaRepository.save(employee);
 
         mockMvc.perform(get("/employees?gender={0}", "Male"))
                 .andExpect(MockMvcResultMatchers.status().is(200))
