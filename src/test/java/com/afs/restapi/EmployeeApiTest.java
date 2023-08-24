@@ -1,6 +1,7 @@
 package com.afs.restapi;
 
 import com.afs.restapi.entity.Employee;
+import com.afs.restapi.repository.EmployeeJpaRepository;
 import com.afs.restapi.repository.InMemoryEmployeeRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
@@ -27,16 +28,22 @@ class EmployeeApiTest {
 
     @Autowired
     private InMemoryEmployeeRepository inMemoryEmployeeRepository;
+    @Autowired
+    private EmployeeJpaRepository employeeJpaRepository;
+
+
+
 
     @BeforeEach
     void setUp() {
         inMemoryEmployeeRepository.clearAll();
+        employeeJpaRepository.deleteAll();
     }
 
     @Test
     void should_update_employee_age_and_salary() throws Exception {
         Employee previousEmployee = new Employee(1L, "zhangsan", 22, "Male", 1000);
-        inMemoryEmployeeRepository.insert(previousEmployee);
+        employeeJpaRepository.save(previousEmployee);
 
         Employee employeeUpdateRequest = new Employee(1L, "lisi", 24, "Female", 2000);
         ObjectMapper objectMapper = new ObjectMapper();
@@ -46,7 +53,7 @@ class EmployeeApiTest {
                         .content(updatedEmployeeJson))
                 .andExpect(MockMvcResultMatchers.status().is(204));
 
-        Optional<Employee> optionalEmployee = inMemoryEmployeeRepository.findById(1L);
+        Optional<Employee> optionalEmployee = employeeJpaRepository.findById(1L);
         assertTrue(optionalEmployee.isPresent());
         Employee updatedEmployee = optionalEmployee.get();
         Assertions.assertEquals(employeeUpdateRequest.getAge(), updatedEmployee.getAge());
