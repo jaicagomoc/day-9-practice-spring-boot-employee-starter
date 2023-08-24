@@ -41,24 +41,24 @@ class EmployeeApiTest {
     @Test
     void should_update_employee_age_and_salary() throws Exception {
         Employee previousEmployee = new Employee(1L, "zhangsan", 22, "Male", 1000);
-        employeeJpaRepository.save(previousEmployee);
+        Employee saveEmployee = employeeJpaRepository.save(previousEmployee);
 
         Employee employeeUpdateRequest = new Employee(1L, "lisi", 24, "Female", 2000);
         ObjectMapper objectMapper = new ObjectMapper();
         String updatedEmployeeJson = objectMapper.writeValueAsString(employeeUpdateRequest);
-        mockMvc.perform(put("/employees/{id}", 1)
+        mockMvc.perform(put("/employees/{id}", saveEmployee.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(updatedEmployeeJson))
                 .andExpect(MockMvcResultMatchers.status().is(204));
 
-        Optional<Employee> optionalEmployee = employeeJpaRepository.findById(1L);
+        Optional<Employee> optionalEmployee = employeeJpaRepository.findById(saveEmployee.getId());
         assertTrue(optionalEmployee.isPresent());
         Employee updatedEmployee = optionalEmployee.get();
         Assertions.assertEquals(employeeUpdateRequest.getAge(), updatedEmployee.getAge());
         Assertions.assertEquals(employeeUpdateRequest.getSalary(), updatedEmployee.getSalary());
-        Assertions.assertEquals(previousEmployee.getId(), updatedEmployee.getId());
-        Assertions.assertEquals(previousEmployee.getName(), updatedEmployee.getName());
-        Assertions.assertEquals(previousEmployee.getGender(), updatedEmployee.getGender());
+        Assertions.assertEquals(saveEmployee.getId(), updatedEmployee.getId());
+        Assertions.assertEquals(saveEmployee.getName(), updatedEmployee.getName());
+        Assertions.assertEquals(saveEmployee.getGender(), updatedEmployee.getGender());
     }
 
     @Test
