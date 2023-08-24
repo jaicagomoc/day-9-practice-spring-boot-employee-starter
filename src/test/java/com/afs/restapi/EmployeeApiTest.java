@@ -99,7 +99,7 @@ class EmployeeApiTest {
         Employee employee = getEmployeeBob();
         Employee savedEmployee = employeeJpaRepository.save(employee);
 
-        mockMvc.perform(get("/employees/{id}", 1))
+        mockMvc.perform(get("/employees/{id}", savedEmployee.getId()))
                 .andExpect(MockMvcResultMatchers.status().is(200))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(savedEmployee.getId()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(employee.getName()))
