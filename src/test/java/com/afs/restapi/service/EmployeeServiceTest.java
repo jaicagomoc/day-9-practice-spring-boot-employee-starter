@@ -37,6 +37,16 @@ class EmployeeServiceTest {
         Assertions.assertEquals(savedEmployee.getSalary(), savedEmployeeResponse.getSalary());
 
     }
+    @Test
+    void should_set_employee_active_status_to_true_by_default_when_create_employee_given_employee_service() {
+        //given
+        Employee employee = getEmployeeBob();
+        when(mockedEmployeeJpaRepository.save(employee)).thenReturn(employee);
+        //when
+        Employee savedEmployeeResponse = employeeService.create(employee);
+        //then
+        Assertions.assertTrue(savedEmployeeResponse.isActiveStatus());
+    }
 
     private static Employee getEmployeeBob() {
         Employee employee = new Employee();
