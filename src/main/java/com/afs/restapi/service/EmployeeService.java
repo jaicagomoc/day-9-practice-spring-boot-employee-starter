@@ -56,4 +56,9 @@ public class EmployeeService {
     public void delete(Long id) {
         employeeJpaRepository.deleteById(id);
     }
+
+
+    public List<Employee> getEmployeesByCompanyId(Long companyId) {
+        return employeeJpaRepository.findByCompanyId(companyId);}
+
 }

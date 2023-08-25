@@ -74,4 +74,8 @@ public class Employee {
     public void setCompanyId(Long companyId) {
         this.companyId = companyId;
     }
+
+    public boolean isActiveStatus() {
+        return true;
+    }
 }
