@@ -1,13 +1,12 @@
 package com.afs.restapi.service;
 
 import com.afs.restapi.entity.Employee;
+import com.afs.restapi.exception.EmployeeCreateException;
 import com.afs.restapi.repository.EmployeeJpaRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 import static org.mockito.Mockito.when;
 
@@ -47,6 +46,36 @@ class EmployeeServiceTest {
         //then
         Assertions.assertTrue(savedEmployeeResponse.isActiveStatus());
     }
+//    @Test
+//    void should_throw_exception_when_saveEmployee_given_employee_service_and_employee_age_is_less_than_65() {
+//        //given
+//        Employee employee = getEmployeeBob();
+//        //when
+//        EmployeeCreateException employeeCreateException = Assertions
+//                .assertThrows(EmployeeCreateException.class, () -> {
+//                    employeeService.create(employee);
+//                });
+//        //then
+//        Assertions.assertEquals("Employee must be 18~65 years old.", employeeCreateException.getMessage());
+//    }
+//    @Test
+//    void should_update_employee_active_status_to_false_when_deleteEmployee_given_employee_service_employee_id() {
+//        //given
+//        Employee employee = getEmployeeBob();
+//        when(mockedEmployeeJpaRepository.findById(employee.getId())).thenReturn(employee);
+//        //when
+//        employeeService.delete(employee.getId());
+//        //then
+//        verify(mockedEmployeeJpaRepository).updateEmployee(argThat((tempEmployee) -> {
+//            Assertions.assertFalse(tempEmployee.isActiveStatus());
+//            Assertions.assertEquals(employee.getId(), employee.getId());
+//            Assertions.assertEquals(employee.getName(), employee.getName());
+//            Assertions.assertEquals(employee.getAge(), employee.getAge());
+//            Assertions.assertEquals(employee.getGender(), employee.getGender());
+//            Assertions.assertEquals(employee.getSalary(), employee.getSalary());
+//            return true;
+//        }), eq(employee.getId()));
+//    }
 
     private static Employee getEmployeeBob() {
         Employee employee = new Employee();

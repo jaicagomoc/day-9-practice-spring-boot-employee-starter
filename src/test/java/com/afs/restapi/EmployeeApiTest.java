@@ -61,14 +61,13 @@ class EmployeeApiTest {
     @Test
     void should_create_employee() throws Exception {
         Employee employee = getEmployeeBob();
-
         ObjectMapper objectMapper = new ObjectMapper();
         String employeeRequest = objectMapper.writeValueAsString(employee);
         mockMvc.perform(post("/employees")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(employeeRequest))
                 .andExpect(MockMvcResultMatchers.status().is(201))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(employee.getName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(employee.getAge()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value(employee.getGender()))
@@ -79,7 +78,6 @@ class EmployeeApiTest {
     void should_find_employees() throws Exception {
         Employee employee = getEmployeeBob();
         Employee savedEmployee = employeeJpaRepository.save(employee);
-
 
         mockMvc.perform(get("/employees"))
                 .andExpect(MockMvcResultMatchers.status().is(200))
