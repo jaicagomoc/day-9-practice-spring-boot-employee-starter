@@ -73,7 +73,6 @@ class EmployeeApiTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value(employee.getGender()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(employee.getSalary()));
     }
-
     @Test
     void should_find_employees() throws Exception {
         Employee employee = getEmployeeBob();
